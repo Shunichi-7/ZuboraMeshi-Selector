@@ -11,36 +11,13 @@
 
     <h2>アカウント登録</h2>
 
-    <form method="post">
-        {% csrf_token %}
+<form method="post">
+    {% csrf_token %}
 
-        <p>
-            <label for="username">ユーザー名</label><br>
-            <input type="text" id="username" name="username">
-        </p>
+    {{ form.as_p }}
 
-        <p>
-            <label for="email">メールアドレス</label><br>
-            <input type="email" id="email" name="email">
-        </p>
-
-        <p>
-            <label for="password">パスワード</label><br>
-            <input type="password" id="password" name="password">
-        </p>
-
-        <p>
-            <label for="password_confirm">パスワード再入力</label><br>
-            <input
-                type="password"
-                id="password_confirm"
-                name="password_confirm"
-            >
-        </p>
-
-        <button type="submit">登録</button>
-
-    </form>
+    <button type="submit">登録</button>
+</form> <!--forms.pyで設定したユーザー名・メールアドレス・パスワードの入力欄を登録画面で使用できるようにするため、views.pyから受け取ったアカウント登録フォームを、項目ごとに段落に分けて画面へ表示する-->
 
     <p>
         <a href="{% url 'login' %}">ログイン画面へ戻る</a>
