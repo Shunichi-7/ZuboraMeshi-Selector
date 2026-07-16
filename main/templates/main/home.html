@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ホーム | ズボラ飯セレクター</title>
+</head>
+
+<body>
+
+    <h1>ズボラ飯セレクター</h1>
+
+    <h2>レシピ検索</h2>
+
+    <p>希望条件を選択してレシピを検索しましょう</p>
+
+    <form>
+
+        <p>
+            【調理時間】<br>
+            <label>
+                <input type="checkbox" name="cooking_time" value="10">
+                10分以内
+            </label>
+
+            <label>
+                <input type="checkbox" name="cooking_time" value="20">
+                20分以内
+            </label>
+        </p>
+
+        <p>
+            【材料数】<br>
+            <label>
+                <input type="checkbox" name="ingredient_count" value="3">
+                3つ以内
+            </label>
+
+            <label>
+                <input type="checkbox" name="ingredient_count" value="5">
+                5つ以内
+            </label>
+        </p>
+
+        <p>
+            【1食あたりの金額】<br>
+            <label>
+                <input type="checkbox" name="price" value="300">
+                300円以下
+            </label>
+
+            <label>
+                <input type="checkbox" name="price" value="500">
+                500円以下
+            </label>
+        </p>
+
+        <p>
+            【気分タグ】<br>
+
+            <label>
+                <input type="checkbox" name="mood" value="tired">
+                疲れている
+            </label>
+
+            <label>
+                <input type="checkbox" name="mood" value="hearty">
+                ガッツリ
+            </label>
+
+            <label>
+                <input type="checkbox" name="mood" value="refreshing">
+                さっぱり
+            </label>
+
+            <label>
+                <input type="checkbox" name="mood" value="delicious">
+                とにかくうまい
+            </label>
+        </p>
+
+        <p>
+            【ズボラ条件】<br>
+
+            <label>
+                <input type="checkbox" name="zubora" value="no_knife">
+                包丁不要
+            </label>
+
+            <label>
+                <input type="checkbox" name="zubora" value="one_pan">
+                ワンパン
+            </label>
+
+            <label>
+                <input type="checkbox" name="zubora" value="microwave">
+                レンチン
+            </label>
+
+            <label>
+                <input type="checkbox" name="zubora" value="rice_cooker">
+                炊飯器
+            </label>
+
+            <label>
+                <input type="checkbox" name="zubora" value="meal_prep">
+                作り置き
+            </label>
+        </p>
+
+        <button type="submit">この条件で探す</button>
+
+    </form>
+
+    <hr>
+
+    <nav>
+        <a href="#">レシピ検索</a>
+
+        <a href="#">レシピ投稿</a>
+
+        <!--
+        ログインしている場合は「マイページ」、
+        ログインしていない場合は「ログイン」を表示する
+        -->
+        {% if user.is_authenticated %}
+            <a href="#">マイページ</a>
+        {% else %}
+            <a href="{% url 'login' %}">ログイン</a>
+        {% endif %}
+    </nav>
+
+</body>
+
+</html>

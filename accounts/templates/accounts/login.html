@@ -11,8 +11,8 @@
         {% csrf_token %} <!--このWebサイトの正しい画面から送信されたことを確認し、不正な送信を防ぐためのDjangoのセキュリティ機能。外部サイトなどから不正なリクエストを送られるCSRF攻撃を防ぐため-->
 
         <p> <!-- メールアドレスの項目を1つのまとまりにする、画面を整理しやすくするため -->
-            <label for="email">メールアドレス</label><br> <!-- 「何を入力する欄なのか」を表示する -->
-            <input type="email" id="email" name="email"> 
+            <label for="username">ユーザー名</label><br>
+            <input type="text" id="username" name="username">
         </p>
 
         <p>
