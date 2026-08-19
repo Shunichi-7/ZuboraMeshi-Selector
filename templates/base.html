@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{% block title %}ズボラ飯セレクター{% endblock %}</title>
+
+    <style>
+        /* 全ページ共通 */
+        body {
+            margin: 0;
+            background: #f5f5f5;
+            font-family: sans-serif;
+        }
+
+        /* アプリ全体の表示領域 */
+        .container {
+            width: 390px;
+            max-width: 100%;
+            margin: 0 auto;
+            background: white;
+            min-height: 100vh;
+            border-left: 1px solid #ccc;
+            border-right: 1px solid #ccc;
+            box-sizing: border-box;
+            /* ヘッダー・本文・下部ナビを縦方向に並べる */
+            display: flex;
+
+            /* 縦方向に並べる */
+            flex-direction: column;
+        }
+
+        /* 全ページ共通ヘッダー */
+        .header {
+            background: #fff2cc;
+            color: #ff9800;
+            text-align: center;
+            font-size: 30px;
+            font-weight: bold;
+            padding: 12px 0;
+            border-bottom: 1px solid #999;
+        }
+
+        /* ==========================
+        各ページ共通タイトル
+        ========================== */
+
+        .page-title {
+            font-size: 24px;
+            font-weight: bold;
+            text-align: left;
+            margin: 0 0 30px;
+        }
+
+        /* 中央寄せにするページタイトル */
+        .page-title-center {
+            text-align: center;
+        }
+
+        /* ==========================
+            下部ナビゲーションバー
+        ========================== */
+
+        .bottom-nav {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+
+            width: 390px;
+            max-width: 100%;
+            box-sizing: border-box;
+
+            margin-top: auto;
+            margin-left: auto;
+            margin-right: auto;
+
+            border-top: 1px solid #ccc;
+            background: white;
+            padding: 8px 0;
+        }
+
+        .bottom-nav-item {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+            text-decoration: none;
+            color: #333;
+            font-size: 12px;
+        }
+
+        .bottom-nav-icon {
+            font-size: 25px;
+            line-height: 1;
+        }
+
+        .bottom-nav-item:hover {
+            color: #4285f4;
+        }
+
+        /* レシピ検索の虫眼鏡アイコン */
+        .search-icon {
+            width: 18px;
+            height: 18px;
+            border: 2px solid #333;
+            border-radius: 50%;
+            position: relative;
+            display: block;
+            margin-bottom: 7px;
+        }
+
+        /* 虫眼鏡の持ち手 */
+        .search-icon::after {
+            content: "";
+            position: absolute;
+
+            width: 8px;
+            height: 2px;
+
+            background: #333;
+
+            /* 円の右下に持ち手をつなげる */
+            right: -6px;
+            bottom: -3px;
+
+            /* 右下方向へ傾ける */
+            transform: rotate(45deg);
+            transform-origin: left center;
+        }
+
+        /* レシピ投稿の＋アイコン */
+        .post-icon {
+            width: 24px;
+            height: 24px;
+            border: 2px solid #333;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            line-height: 1;
+            margin-bottom: 3px;
+        }
+
+        /* マイページの人型アイコン */
+        .mypage-icon {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: #4285f4;
+            position: relative;
+            display: block;
+            margin-bottom: 3px;
+
+            /* HTMLに書いてある●を見えなくする */
+            font-size: 0;
+        }
+
+        /* 人の頭 */
+        .mypage-icon::before {
+            content: "";
+            position: absolute;
+            width: 9px;
+            height: 9px;
+            background: white;
+            border-radius: 50%;
+            top: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* 人の体 */
+        .mypage-icon::after {
+            content: "";
+            position: absolute;
+            width: 17px;
+            height: 9px;
+            background: white;
+            border-radius: 10px 10px 5px 5px;
+            bottom: 4px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* 未ログイン時のログインアイコン */
+        .login-icon {
+            width: 25px;
+            height: 25px;
+            position: relative;
+            display: block;
+            margin-bottom: 3px;
+
+            /* HTMLに書いてある ⇥ を非表示にする */
+            font-size: 0;
+        }
+
+        /* ドア部分 */
+        .login-icon::before {
+            content: "";
+            position: absolute;
+
+            width: 13px;
+            height: 20px;
+
+            right: 0;
+            top: 1px;
+
+            border: 2px solid #333;
+            border-left: none;
+
+            border-radius: 2px;
+        }
+
+        /* ログインアイコンの右向き矢印 */
+        .login-icon::after {
+            content: "→";
+            position: absolute;
+
+            left: 0;
+
+            /* ドアの縦中央に矢印を配置する */
+            top: 50%;
+            transform: translateY(-60%);
+
+            font-size: 25px;
+            color: #333;
+            line-height: 1;
+        }
+
+        .login-icon {
+            width: 28px;
+            height: 28px;
+            position: relative;
+            display: block;
+            margin-bottom: 3px;
+
+            /* アイコン全体を少し左へ調整 */
+            transform: translateX(-2px);
+
+            /* HTMLの⇥を非表示 */
+            font-size: 0;
+        }
+
+        /* =========================
+        共通モーダル
+        ========================= */
+
+        /* 画面全体を覆う黒い背景 */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            padding: 22px;
+            box-sizing: border-box;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        /* モーダルの白い部分 */
+        .modal-content {
+            width: 100%;
+            max-width: 540px;
+            padding: 32px 24px;
+            box-sizing: border-box;
+            background-color: white;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        /* モーダル内のメッセージ */
+        .modal-message {
+            margin: 0 0 28px;
+            font-size: 24px;
+            font-weight: bold;
+            line-height: 1.5;
+            text-align: center;
+        }
+
+        /* ログイン要求のメッセージ */
+        .login-modal-message {
+            color: red;
+        }
+
+        /* 削除・ログアウト確認のメッセージ */
+        .delete-modal-message,
+        .logout-modal-message {
+            color: red;
+        }
+
+        /* ボタンを横並びにする部分 */
+        .modal-buttons {
+            display: flex;
+            justify-content: center;
+            align-items: stretch;
+            gap: 8px;
+        }
+
+        /* ボタンが1個だけの場合 */
+        .modal-buttons-single {
+            justify-content: center;
+        }
+
+        /* モーダル共通ボタン */
+        .modal-button {
+            width: 195px;
+            height: 60px;
+            padding: 0 12px;
+            box-sizing: border-box;
+            border: 1px solid #999;
+            background-color: white;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        /* 閉じるボタン */
+        .modal-close-button {
+            width: 140px;
+            color: #333;
+        }
+
+        /* キャンセルボタン */
+            .modal-cancel-button {
+            color: #2878ff;
+        }
+
+        /* 削除・ログアウトボタン */
+        .modal-danger-button {
+            border-color: red;
+            background-color: red;
+            color: white;
+        }
+
+        /* formが挟まっても左右のボタンを同じサイズにする */
+        .modal-form {
+            width: 195px;
+            max-width: 195px;
+            margin: 0;
+        }
+
+        .modal-form .modal-button {
+            width: 100%;
+        }
+
+        /* aタグをモーダルボタンとして表示する */
+        .modal-link {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        /* 幅の狭いスマートフォン用 */
+        @media (max-width: 480px) {
+            .modal-content {
+                padding: 28px 20px;
+            }
+
+            .modal-message {
+                font-size: 22px;
+            }
+
+            .modal-buttons {
+                gap: 6px;
+            }
+
+            .modal-button,
+            .modal-form {
+                width: 100%;
+                max-width: 195px;
+            }
+        }
+
+        /* ==========================
+        レシピ詳細 共通デザイン
+        ========================== */
+
+        .detail-container {
+            padding: 10px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .detail-heading {
+            font-size: 18px;
+            margin: 0 0 6px;
+        }
+
+        .recipe-title {
+            font-size: 28px;
+            margin: 12px 0;
+        }
+
+        .detail-main {
+            display: flex;
+            gap: 30px;
+            align-items: flex-start;
+        }
+
+        .detail-image {
+            width: 110px;
+            height: 110px;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+
+        .detail-tags {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 1px;
+            margin: 0;
+        }
+
+        .detail-tag {
+            font-size: 10px;
+            line-height: 1.2;
+            color: #555;
+        }
+
+        .recipe-info {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin: 5px 0 3px;
+            font-size: 14px;
+        }
+
+        .recipe-basic-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .favorite-button {
+            margin: 0;
+            padding: 5px 10px;
+            border: 1px solid #999;
+            background: white;
+            color: #333;
+            border-radius: 6px;
+            font-size: 12px;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .favorite-button.active {
+            color: #d60000;
+        }
+
+        .detail-divider {
+            border: none;
+            border-top: 1px solid #999;
+            margin: 5px 0;
+        }
+
+        .section-title {
+            margin: 12px 0 4px;
+            font-size: 22px;
+        }
+
+        .recipe-description {
+            margin: 0;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+
+        
+    </style>
+
+    <!-- login.htmlやhome.htmlなど、各ページ固有の内容をここに表示する -->
+    {% block extra_css %}
+    {% endblock %}
+</head>
+
+<body>
+
+    <div class="container">
+
+        <!-- 全ページ共通ヘッダー -->
+        <header class="header">
+            ズボラ飯セレクター
+        </header>
+
+        <!-- 各ページ固有の内容をここに表示する -->
+        {% block content %}
+        {% endblock %}
+
+        <!-- 各ページで必要な場合に下部ナビを表示する -->
+        {% block bottom_nav %}
+        {% include "includes/bottom_nav.html" %}
+        {% endblock %}
+
+    </div>
+
+</body>
+</html>

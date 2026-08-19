@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block title %}
+アカウント情報編集 | ズボラ飯セレクター
+{% endblock %}
+
+{% block extra_css %}
+
+<style>
+
+.account-edit-container {
+    padding: 10px;
+}
+
+.account-edit-container p {
+    padding: 5px 10px;
+}
+
+.update-button {
+    display: block;
+    width: 130px;
+    margin: 25px auto 0;
+    padding: 10px 0;
+    background-color: #4285e8;
+    color: white;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.account-edit-container form {
+    width: 320px;
+    max-width: calc(100% - 70px);
+    margin: 0 auto;
+}
+
+.account-edit-container form p {
+    margin: 5px 0 8px;
+}
+
+.account-edit-container input {
+    width: 100%;
+    height: 40px;
+    padding: 6px 10px;
+    border: 1px solid #999;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+</style>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="account-edit-container">
+
+<h1 class="page-title page-title-center">
+    アカウント情報編集
+</h1>
+
+<form method="post">
+
+    {% csrf_token %}
+
+    <p>
+        <label>ユーザー名</label><br>
+        {{ form.username }}
+
+        <!-- ユーザー名の入力に問題がある場合、エラーを表示する -->
+        {% if form.username.errors %}
+            <div style="color:red;">
+                {{ form.username.errors }}
+            </div>
+        {% endif %}
+    </p>
+
+    <p>
+        <label>メールアドレス</label><br>
+        {{ form.email }}
+
+        <!-- メールアドレスの入力に問題がある場合、エラーを表示する -->
+        {% if form.email.errors %}
+            <div style="color:red;">
+                {{ form.email.errors }}
+            </div>
+        {% endif %}
+    </p>
+
+    <button type="submit" class="update-button">
+        更新
+    </button>
+
+</form>
+
+</div>
+
+{% endblock %}

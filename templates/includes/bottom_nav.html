@@ -1,0 +1,110 @@
+<!-- 全画面で共通して使用する下部ナビゲーションバー -->
+<nav class="bottom-nav">
+
+    <!-- レシピ検索画面へ移動する -->
+    <a href="{% url 'home' %}" class="bottom-nav-item">
+        <span class="search-icon"></span>
+        <span>レシピ検索</span>
+    </a>
+
+    <!-- レシピ投稿 -->
+    {% if user.is_authenticated %}
+
+        <!-- ログイン中：投稿画面へ移動 -->
+        <a href="{% url 'recipe_create' %}" class="bottom-nav-item">
+            <span class="post-icon">＋</span>
+            <span>レシピ投稿</span>
+        </a>
+
+    {% else %}
+
+        <!-- 非ログイン：ログインモーダルを表示 -->
+        <a href="#" class="bottom-nav-item" id="open-post-login-modal">
+            <span class="post-icon">＋</span>
+            <span>レシピ投稿</span>
+        </a>
+
+    {% endif %}
+
+    <!-- ログインしているかどうかで右側のメニューを切り替える -->
+    {% if user.is_authenticated %}
+
+        <!-- ログイン中の場合はマイページへ移動する -->
+        <a href="{% url 'mypage' %}" class="bottom-nav-item">
+            <span class="mypage-icon">●</span>
+            <span>マイページ</span>
+        </a>
+
+    {% else %}
+
+        <!-- ログインしていない場合はログイン画面へ移動する -->
+        <a href="{% url 'login' %}" class="bottom-nav-item">
+            <span class="login-icon">⇥</span>
+            <span>ログイン</span>
+        </a>
+
+    {% endif %}
+
+    
+    {% if not user.is_authenticated %}
+
+<div
+    class="modal-overlay"
+    id="post-login-modal"
+>
+    <div class="modal-content">
+
+        <p class="modal-message login-modal-message">
+            この機能を利用するには<br>
+            ログインしてください
+        </p>
+
+        <div class="modal-buttons modal-buttons-single">
+
+            <button
+                type="button"
+                id="close-post-login-modal"
+                class="modal-button modal-close-button"
+            >
+                閉じる
+            </button>
+
+        </div>
+
+    </div>
+</div>
+
+{% endif %}
+    
+    <script>
+        const openPostLoginModal = document.getElementById("open-post-login-modal");
+        const postLoginModal = document.getElementById("post-login-modal");
+        const closePostLoginModal = document.getElementById("close-post-login-modal");
+
+        if (openPostLoginModal && postLoginModal) {
+
+            // 「レシピ投稿」を押したらモーダルを表示
+            openPostLoginModal.addEventListener("click", function(event) {
+                event.preventDefault();
+                postLoginModal.style.display = "flex";
+            });
+
+            // 「閉じる」を押したらモーダルを閉じる
+            if (closePostLoginModal) {
+                closePostLoginModal.addEventListener("click", function() {
+                    postLoginModal.style.display = "none";
+                });
+            }
+
+            // 黒い背景部分を押したらモーダルを閉じる
+            postLoginModal.addEventListener("click", function(event) {
+
+                if (event.target === postLoginModal) {
+                    postLoginModal.style.display = "none";
+                }
+
+            });
+        }
+    </script>
+
+</nav>

@@ -1,0 +1,152 @@
+{% extends "base.html" %}
+
+{% block title %}
+マイページ | ズボラ飯セレクター
+{% endblock %}
+
+{% block extra_css %}
+
+<style>
+
+    /* マイページ全体 */
+    .mypage-container {
+        width: 320px;
+        margin: 30px auto;
+        background-color: white;
+        border: none;
+        text-align: center;
+    }
+
+    /* メニューボタン */
+    .menu-button {
+        width: 180px;
+        padding: 10px 0;
+        margin: 8px 0;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    /* ログアウトボタン */
+    .logout-button {
+        width: 180px;
+        padding: 10px 0;
+        margin-top: 8px;
+        background-color: red;
+        color: white;
+        border: none;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+</style>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="mypage-container">
+    <h1 class="page-title page-title-center">
+        マイページ
+    </h1>
+
+    <p>{{ user.username }}</p>
+    <p>{{ user.email }}</p>
+
+    <a href="{% url 'my_recipes' %}">
+        <button class="menu-button">
+            マイレシピ一覧
+        </button>
+    </a>
+
+    <a href="{% url 'favorite_list' %}">
+        <button class="menu-button">
+            お気に入り一覧
+        </button>
+    </a>
+
+    <a href="{% url 'edit_account' %}">
+        <button class="menu-button">
+            アカウント情報編集
+        </button>
+    </a>
+
+    <a href="{% url 'password_change' %}">
+        <button class="menu-button">
+            パスワード変更
+        </button>
+    </a>
+
+
+    <!--
+    ログアウトボタン
+    ・class：CSSでデザインを適用する
+    ・id：JavaScriptから取得するための名前
+    -->
+    <button
+        type="button"
+        class="logout-button" 
+        id="logout-button" 
+    >
+        ログアウト
+    </button>
+
+</div>
+
+<!-- ログアウト確認モーダル -->
+<div
+    id="logout-modal"
+    class="modal-overlay"
+>
+    <div class="modal-content">
+
+        <p class="modal-message logout-modal-message">
+            ログアウトします。<br>
+            よろしいですか？
+        </p>
+
+        <div class="modal-buttons">
+
+            <button
+                type="button"
+                id="logout-cancel"
+                class="modal-button modal-cancel-button"
+            >
+                キャンセル
+            </button>
+
+            <a
+                href="{% url 'logout' %}"
+                class="modal-button modal-danger-button modal-link"
+            >
+                ログアウト
+            </a>
+
+        </div>
+
+    </div>
+</div>
+
+<script>
+
+// ログアウトボタンを取得する
+const logoutButton = document.getElementById("logout-button");
+
+// ログアウト確認モーダルを取得する
+const logoutModal = document.getElementById("logout-modal");
+
+// キャンセルボタンを取得する
+const logoutCancel = document.getElementById("logout-cancel");
+
+// ログアウトボタンを押したらモーダルを表示する
+logoutButton.addEventListener("click", function () {
+    logoutModal.style.display = "flex";
+});
+
+// キャンセルボタンを押したらモーダルを閉じる
+logoutCancel.addEventListener("click", function () {
+    logoutModal.style.display = "none";
+});
+
+</script>
+
+{% endblock %}

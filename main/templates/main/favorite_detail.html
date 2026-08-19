@@ -1,0 +1,264 @@
+{% extends "base.html" %}
+
+{% block title %}
+お気に入り詳細 | ズボラ飯セレクター
+{% endblock %}
+
+{% block extra_css %}
+
+    <style>
+        .detail-container {
+            max-width: 375px;
+            margin: 0 auto;
+            padding: 10px;
+            background-color: white;
+        }
+
+        .detail-main {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start; /* 画像とタグの上端をそろえる */
+        }
+
+        .detail-image {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;          /* 画像を100×100の枠いっぱいに表示する */
+            object-position: center;    /* 画像の中央を表示する */
+            border-radius: 4px;         /* 角を少しだけ丸くする */
+            flex-shrink: 0;             /* 画像が縮まらないようにする */
+        }
+
+        .detail-tags {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 4px;
+            margin-top: 2px;
+        }
+
+        .detail-tag {
+            background: none;
+            padding: 0;
+            border-radius: 20px; /* タグの角を丸く */
+            font-size: 14px;
+            font-weight: normal;
+            color: #555;
+        }
+
+        .recipe-title {
+            font-size: 20px;
+            margin: 12px 0;
+        }
+
+        .recipe-info {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin: 12px 0 20px;
+            font-size: 14px;
+            font-weight: normal;
+        }
+
+        .section-title {
+            margin-top: 12px;
+            margin-bottom: 6px;
+            font-size: 20px;
+        }
+
+        .recipe-description {
+            line-height: 1.5;
+            font-size: 16px;
+            margin: 6px 0;
+        }
+
+        html,
+        body {
+            min-height: 100%;
+            overflow-y: auto;
+        } /* スマホ表示でも縦にスクロールできるようにする */ 
+
+        .favorite-button {
+            margin: 0;
+            padding: 6px 12px;
+            border: 1px solid #999;
+            background-color: white;
+            color: #333;
+            border-radius: 6px;
+            font-size: 12px;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+            
+        .favorite-button.active {
+            background-color: white;
+            color: #d60000;
+            border: 1px solid #d60000;
+        }
+
+        .recipe-basic-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .detail-divider {
+            border: none;
+            border-top: 1px solid #999;
+            margin: 5px 0;
+        }
+
+    </style>
+
+{% endblock %}
+
+{% block content %}
+
+    <div class="detail-container">
+
+        <h2 class="page-title page-title-left">
+            お気に入り詳細
+        </h2>
+
+        <h2 class="recipe-title">
+            {{ recipe.title }}
+        </h2>
+
+        <div class="detail-main">
+
+            {% if recipe.image %}
+                <img
+                    src="{{ recipe.image.url }}"
+                    alt="{{ recipe.title }}の画像"
+                    class="detail-image"
+                >
+            {% else %}
+                <img
+                    src="https://placehold.jp/300x200.png"
+                    alt="画像なし"
+                    class="detail-image"
+                >
+            {% endif %}
+
+        <div class="detail-tags">
+
+            {% for tag in recipe.zubora_tags %}
+                <div class="detail-tag">#{{ tag }}</div>
+            {% endfor %}
+
+            {% for tag in recipe.mood_tags %}
+                <div class="detail-tag">#{{ tag }}</div>
+            {% endfor %}
+
+    </div>
+
+</div>
+
+<div class="recipe-info">
+
+    <div class="recipe-basic-info">
+
+        <div>
+            調理時間：{{ recipe.cooking_time }}分
+        </div>
+
+        <div>
+            何食分：{{ recipe.servings }}食分
+        </div>
+
+        <div>
+            1食あたりの金額：{{ recipe.price }}円
+        </div>
+
+    </div>
+
+    {% if user.is_authenticated %} <!-- ログイン中は、お気に入り登録・解除を行う -->
+
+        <form method="post" action="{% url 'favorite_toggle' recipe.id %}">
+            {% csrf_token %}
+
+            <button
+                class="
+                {% if is_favorite %}
+                    favorite-button active
+                {% else %}
+                    favorite-button
+                {% endif %}
+                "
+            >
+
+                {% if is_favorite %}
+                    ❤️ お気に入り
+                {% else %}
+                    🤍 お気に入り
+                {% endif %}
+
+            </button>
+
+        </form>
+    {% else %} <!-- 非ログイン時は、モーダルを開くボタンを表示する -->
+
+        <button
+            type="button"
+            class="favorite-button"
+            id="open-login-modal"
+        >
+            🤍 お気に入り
+        </button>
+
+    {% endif %}
+
+</div>
+        <hr class="detail-divider">
+
+        <h3 class="section-title">
+            材料（{{ recipe.servings }}食分）
+        </h3>
+
+        <p class="recipe-description">
+            {{ recipe.ingredients|linebreaksbr }}
+        </p>
+
+        <h3 class="section-title">
+            作り方
+        </h3>
+
+        <p class="recipe-description">
+            {{ recipe.steps|linebreaksbr }}
+        </p>
+
+        <h3 class="section-title">
+            メモ
+        </h3>
+
+        <p class="recipe-description">
+            {{ recipe.memo|linebreaksbr }}
+        </p>
+
+</div>
+
+<div
+    id="login-modal"
+    class="modal-overlay"
+>
+    <div class="modal-content">
+
+        <p class="modal-message login-modal-message">
+            この機能を利用するには<br>
+            ログインしてください
+        </p>
+
+        <div class="modal-buttons">
+            <button
+                type="button"
+                id="close-login-modal"
+                class="modal-button modal-close-button"
+            >
+                閉じる
+            </button>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

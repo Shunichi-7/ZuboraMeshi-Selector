@@ -17,8 +17,13 @@ Including another URLconf
 from django.contrib import admin #Djangoの管理画面を使用できるようにするため、管理画面機能を読み込む
 from django.urls import path, include #URLを設定するpathと、各アプリのURL設定を読み込むincludeを使用するため、DjangoのURL機能を読み込む
 
+from django.conf import settings
+from django.conf.urls.static import static
+
 urlpatterns = [
     path('admin/', admin.site.urls), #URLの末尾がadmin/だったら、Djangoの管理画面へ案内する
     path("", include("main.urls")), #ポートフォリオ画面やホーム画面を表示できるようにするため、プロジェクト全体のURL設定とmain/urls.pyをつないだ
     path("accounts/", include("accounts.urls")), #ログイン画面やアカウント作成画面へアクセスできるようにするため、プロジェクト全体のURL設定とaccounts/urls.pyをつないだ
 ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) # 管理画面でアップロードした料理画像を画面に表示するため、mediaフォルダに保存した画像をブラウザから表示できるようにする。
