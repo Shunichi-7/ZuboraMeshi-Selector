@@ -1,18 +1,158 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
+
+    <!-- スマートフォンの画面幅に合わせてページを表示する -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>ポートフォリオ</title>
+
+    <style>
+        h1 {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .app-images {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 40px;
+            margin: 40px 0;
+        }
+
+        .app-images img {
+            width: 280px;
+            height: auto;
+            border: 2px solid #333;
+        }
+
+        .app-description {
+            max-width: 1100px;
+            margin: 50px auto;
+            text-align: center;
+            font-size: 18px;
+            line-height: 2;
+            word-break: auto-phrase;
+        }
+
+        .app-description p {
+            margin: 0 0 20px;
+        }
+
+        .document-links {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            margin: 50px 0;
+        }
+
+        .document-links a {
+            font-size: 20px;
+        }
+
+        .app-button-area {
+            text-align: center;
+            margin: 40px 0 60px;
+        }
+
+        .app-button {
+            display: inline-block;
+            padding: 14px 35px;
+            color: white;
+            background-color: #007bff;
+            border-radius: 6px;
+            font-size: 20px;
+            text-decoration: none;
+        }
+
+        .app-button:hover {
+            background-color: #0056b3;
+        }
+
+        /* 画面幅が700px以下のスマートフォン用デザイン */
+        @media (max-width: 700px) {
+            h1 {
+                margin: 25px 10px;
+                font-size: 24px;
+            }
+
+        /* アプリ画像2枚を横並びにする */
+        .app-images {
+            flex-direction: row;
+            align-items: flex-start;
+            gap: 12px;
+            margin: 30px 12px;
+        }
+
+        .app-images img {
+            width: calc((100% - 12px) / 2);
+            max-width: none;
+            height: auto;
+        }
+
+        /* 説明文をスマホで読みやすくする */
+        .app-description {
+            width: 90%;
+            margin: 35px auto;
+            text-align: left;
+            font-size: 16px;
+            line-height: 1.8;
+            word-break: normal;
+        }
+
+        .app-description p {
+            margin-bottom: 24px;
+        }
+
+        /* 書類リンク4つを横並びにする */
+        .document-links {
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            margin: 35px 8px;
+        }
+
+        .document-links a {
+            font-size: 14px;
+            white-space: nowrap;
+        }
+
+        /* アクセスボタンをスマホ向けの大きさにする */
+        .app-button {
+            padding: 12px 28px;
+            font-size: 18px;
+        }
+    }
+    </style>
 </head>
 <body>
-    <h1>藤田 駿一のポートフォリオ</h1>
+    <h1>作品No.1 ズボラ飯セレクター</h1>
 
-    <h2>ズボラ飯セレクター</h2>
+    <div class="app-images">
+        <img src="{% static 'main/images/portfolio_home.jpg' %}" alt="ズボラ飯セレクターのホーム画面">
 
-    <p>
-        忙しい人でも、気分や条件に合わせて簡単にレシピを探せるアプリです。
-    </p>
+        <img src="{% static 'main/images/portfolio_detail.jpg' %}" alt="ズボラ飯セレクターのレシピ詳細画面">
+    </div>
 
-    <a href="/home/">アプリへ</a>
+    <div class="app-description">
+        <p>仕事終わりで疲れていたり、料理に手間をかけたくなかったりするユーザーが抱える「何を作るか決められない」という課題を、時短・節約・気分に合わせてレシピを絞り込める機能によって解決するアプリです。</p>
+
+        <p>このアプリを利用することで、ユーザーは「10分以内」「材料3つ以内」「1食300円以下」といったズボラ・節約条件や、その日の気分に応じてレシピを絞り込むことができ、料理を始めるまでの意思決定時間を大幅に削減できます。</p>
+    </div>
+
+    <div class="document-links">
+        <a href="{% static 'main/images/pdf/proposal.pdf' %}" target="_blank">企画書</a>
+        <a href="{% static 'main/images/pdf/screen-design.pdf' %}" target="_blank">画面設計図</a>
+        <a href="{% static 'main/images/pdf/screen-flow.pdf' %}" target="_blank">画面遷移図</a>
+        <a href="{% static 'main/images/pdf/er-diagram.pdf' %}" target="_blank">ER図</a>
+    </div>
+
+    <div class="app-button-area">
+        <a class="app-button" href="{% url 'login' %}">このアプリにアクセス</a>
+    </div>
 </body>
 </html> 
