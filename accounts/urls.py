@@ -10,7 +10,7 @@ urlpatterns = [
     path("edit-account/", views.account_edit, name="edit_account"),
     path(
         "password-change/",
-        auth_views.PasswordChangeView.as_view(
+        views.PasswordChangeView.as_view(
             template_name="accounts/password_change.html", # パスワード変更画面として表示するHTMLを指定する
             form_class=CustomPasswordChangeForm, # forms.pyで作成したパスワード変更フォームを使用する。現在と同じパスワードが入力された場合もエラーにする。
             success_url="/mypage/"
@@ -19,7 +19,7 @@ urlpatterns = [
     ),
     path(
         "password-reset/",
-        auth_views.PasswordResetView.as_view(
+        views.PasswordResetView.as_view(
             template_name="accounts/password_reset.html",
             email_template_name="accounts/password_reset_email.txt",
             subject_template_name="accounts/password_reset_subject.txt",
@@ -29,7 +29,8 @@ urlpatterns = [
         ),
     path(
         "reset/<uidb64>/<token>/",
-        auth_views.PasswordResetConfirmView.as_view(
+        # views.pyで作成した、完了メッセージ付きの新しいパスワード設定処理を使用する
+        views.PasswordResetConfirmView.as_view(
             template_name="accounts/password_reset_confirm.html",
             form_class=CustomSetPasswordForm,
             success_url="/accounts/login/",

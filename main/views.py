@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required # ログインして�
 
 from .models import Recipe, Favorite # レシピとお気に入り情報を使用する
 
-# Create your views here.
+from django.contrib import messages # レシピの投稿や変更などの処理が完了したことをユーザーに知らせるメッセージ機能を読み込む
 
 def portfolio(request):
     return render(request, "main/portfolio.html")
@@ -249,8 +249,14 @@ def recipe_create(request):
             user=request.user,
             
             ingredient_count=ingredient_count,
-
+            
         )
+        
+        # レシピの投稿が完了したことをレシピ一覧画面に表示する
+        messages.success(
+            request,
+            "レシピを投稿しました。"
+        ) 
         
         return redirect("recipe_list") # 保存が完了したら、レシピ一覧画面へ移動する
 
@@ -276,15 +282,31 @@ def favorite_toggle(request, recipe_id): # お気に入りの登録・解除を�
         recipe=recipe
     ).first()
 
-    # お気に入り登録済みなら削除する
+    # お気に入り登録済みの場合
     if favorite:
+
+        # お気に入り情報をデータベースから削除する
         favorite.delete()
 
-    # 未登録なら新しく登録する
+        # お気に入り解除が完了したことを画面に表示する
+        messages.success(
+            request,
+            "お気に入りを解除しました。"
+        )
+
+    # まだお気に入り登録されていない場合
     else:
+
+        # ログイン中のユーザーのお気に入りとしてデータベースに保存する
         Favorite.objects.create(
             user=request.user,
             recipe=recipe
+        )
+
+        # お気に入り登録が完了したことを画面に表示する
+        messages.success(
+            request,
+            "お気に入りに登録しました。"
         )
 
     return redirect(request.META.get("HTTP_REFERER", "/"))
@@ -445,6 +467,12 @@ def my_recipe_edit(request, recipe_id):
 
         # データベースを更新
         recipe.save()
+        
+        # レシピの変更が完了したことをレシピ詳細画面に表示する
+        messages.success(
+            request,
+            "レシピを変更しました。"
+        )
 
         # 詳細画面へ戻る
         return redirect(
@@ -545,6 +573,12 @@ def my_recipe_delete(request, recipe_id):
     if request.method == "POST":
 
         recipe.delete()
+        
+        # レシピの削除が完了したことをマイレシピ一覧画面に表示する
+        messages.success(
+            request,
+            "レシピを削除しました。"
+        )
 
         return redirect("my_recipes")
 

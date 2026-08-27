@@ -15,9 +15,8 @@
             font-family: sans-serif;
         }
 
-        /* アプリ全体の表示領域 */
+        /* アプリ全体の表示 */
         .container {
-            width: 390px;
             max-width: 100%;
             margin: 0 auto;
             background: white;
@@ -27,9 +26,10 @@
             box-sizing: border-box;
             /* ヘッダー・本文・下部ナビを縦方向に並べる */
             display: flex;
-
-            /* 縦方向に並べる */
+            /* 要素を縦方向に並べる */
             flex-direction: column;
+            /* 固定した下部ナビに本文が隠れないようにする */
+            padding-bottom: 70px;
         }
 
         /* 全ページ共通ヘッダー */
@@ -41,6 +41,10 @@
             font-weight: bold;
             padding: 12px 0;
             border-bottom: 1px solid #999;
+            /* スクロールしても画面上部にヘッダーを固定する */
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
 
         /* ==========================
@@ -60,6 +64,32 @@
         }
 
         /* ==========================
+        処理完了メッセージ
+        ========================== */
+
+        /* メッセージ全体の位置と余白を整える */
+        .messages {
+            margin: 12px 16px 0;
+        }
+
+        /* 処理が成功したことを示すメッセージの見た目を設定 */
+        .success-message {
+            margin: 0 0 8px;
+            padding: 12px 14px;
+
+            /* 緑色の枠を付ける */
+            border: 1px solid #8bc99a;
+            border-radius: 6px;
+
+            /* 薄い緑色の背景と濃い緑色の文字にする */
+            background: #eaf7ed;
+            color: #246b36;
+
+            font-size: 14px;
+            line-height: 1.5;
+        }  
+
+        /* ==========================
             下部ナビゲーションバー
         ========================== */
 
@@ -67,15 +97,14 @@
             display: flex;
             justify-content: space-around;
             align-items: center;
-
-            width: 390px;
-            max-width: 100%;
+            width: 100%;
             box-sizing: border-box;
-
-            margin-top: auto;
-            margin-left: auto;
-            margin-right: auto;
-
+            /* スクロールしても画面下部に固定する */
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
             border-top: 1px solid #ccc;
             background: white;
             padding: 8px 0;
@@ -488,6 +517,26 @@
         <header class="header">
             ズボラ飯セレクター
         </header>
+
+        <!-- 登録や変更などの処理完了後にメッセージがある場合だけ表示する -->
+        {% if messages %}
+
+            <!-- 処理結果をユーザーに伝えるメッセージの表示領域 -->
+            <div class="messages" role="status" aria-live="polite">
+
+                <!-- 保存されているメッセージを1件ずつ取り出す -->
+                {% for message in messages %}
+
+                    <!-- accounts/views.pyで設定したメッセージの文章を表示する -->
+                    <p class="success-message">
+                        {{ message }}
+                    </p>
+
+                {% endfor %}
+
+            </div>
+
+        {% endif %}
 
         <!-- 各ページ固有の内容をここに表示する -->
         {% block content %}
