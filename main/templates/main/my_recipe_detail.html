@@ -209,6 +209,7 @@
                 <button
                     type="submit"
                     class="favorite-button {% if is_favorite %}active{% endif %}"
+                    data-processing-text="{% if is_favorite %}解除中…{% else %}登録中…{% endif %}"
                 >
                     {% if is_favorite %}
                         ❤️ お気に入り
@@ -329,6 +330,7 @@
                 <button
                     type="submit"
                     class="modal-button modal-danger-button"
+                    data-processing-text="削除中…"
                 >
                     削除
                 </button>

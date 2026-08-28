@@ -198,6 +198,9 @@
                     favorite-button
                 {% endif %}
                 "
+
+                type="submit"
+                data-processing-text="{% if is_favorite %}解除中…{% else %}登録中…{% endif %}"
             >
 
                 {% if is_favorite %}

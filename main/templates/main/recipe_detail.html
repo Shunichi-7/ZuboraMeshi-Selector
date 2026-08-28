@@ -186,6 +186,7 @@
                 <button
                     type="submit"
                     class="favorite-button {% if is_favorite %}active{% endif %}"
+                    data-processing-text="{% if is_favorite %}解除中…{% else %}登録中…{% endif %}"
                 >
                     {% if is_favorite %}
                         ❤️ お気に入り

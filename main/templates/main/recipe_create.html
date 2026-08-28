@@ -800,6 +800,7 @@
         <button
             type="submit"
             class="submit-button"
+            data-processing-text="保存中…"
         >
             保存
         </button>
@@ -826,6 +827,7 @@
         <button
             type="submit"
             class="submit-button"
+            data-processing-text="投稿中…"
         >
             投稿する
         </button>
@@ -1030,17 +1032,6 @@ addStepButton.addEventListener("click", function () {
 
 });
 
-// 投稿ボタンの二重送信を防止する
-const recipeForm = document.querySelector(".content form");
-
-recipeForm.addEventListener("submit", function () {
-
-    const submitButton = recipeForm.querySelector(".submit-button");
-
-    // 1回送信したらボタンを押せないようにする
-    submitButton.disabled = true;
-});
-
 </script>
 
 <div
@@ -1075,6 +1066,7 @@ recipeForm.addEventListener("submit", function () {
                     <button
                         type="submit"
                         class="modal-button modal-danger-button"
+                        data-processing-text="削除中…"
                     >
                         削除
                     </button>

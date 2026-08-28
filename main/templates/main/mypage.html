@@ -117,6 +117,7 @@
             <a
                 href="{% url 'logout' %}"
                 class="modal-button modal-danger-button modal-link"
+                id="logout-confirm"
             >
                 ログアウト
             </a>
@@ -145,6 +146,22 @@ logoutButton.addEventListener("click", function () {
 // キャンセルボタンを押したらモーダルを閉じる
 logoutCancel.addEventListener("click", function () {
     logoutModal.style.display = "none";
+});
+
+// 確認画面内のログアウトボタンを取得する
+const logoutConfirm = document.getElementById("logout-confirm");
+
+// ログアウトボタンを押したときの処理
+logoutConfirm.addEventListener("click", function () {
+
+    // 処理中であることが分かる表示に変更する
+    logoutConfirm.textContent = "ログアウト中…";
+
+    // 連続で押せないようにする
+    logoutConfirm.style.pointerEvents = "none";
+
+    // 読み上げ機能にも無効状態であることを伝える
+    logoutConfirm.setAttribute("aria-disabled", "true");
 });
 
 </script>

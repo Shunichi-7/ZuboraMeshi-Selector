@@ -549,5 +549,42 @@
 
     </div>
 
+    </div>
+
+    <!-- フォーム送信ボタンの連続タップを防止する -->
+    <script>
+        // 「処理中の表示」が設定されているフォームをすべて取得する
+        const processingForms = document.querySelectorAll(
+            "form:has([data-processing-text])"
+        );
+
+        processingForms.forEach(function (form) {
+
+            form.addEventListener("submit", function (event) {
+
+                // すでに送信済みの場合は、再送信させない
+                if (form.dataset.submitting === "true") {
+                    event.preventDefault();
+                    return;
+                }
+
+                // このフォームが送信済みであることを記録する
+                form.dataset.submitting = "true";
+
+                // 処理中の表示を設定した送信ボタンを取得する
+                const submitButton = form.querySelector(
+                    "[data-processing-text]"
+                );
+
+                // ボタンの表示を変更し、押せない状態にする
+                submitButton.textContent =
+                    submitButton.dataset.processingText;
+
+                submitButton.disabled = true;
+            });
+
+        });
+    </script>
+
 </body>
 </html>
