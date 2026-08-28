@@ -24,6 +24,20 @@
         flex-shrink: 0;
     }
 
+    /* 画像が登録されていない場合 */
+    .no-image {
+        width: 80px;
+        height: 80px;
+        background-color: #eeeeee;
+        color: #777777;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 12px;
+        font-weight: bold;
+        flex-shrink: 0;
+    }
+
     .my-recipe-info {
         flex: 1;
         min-width: 0;
@@ -74,11 +88,9 @@
                     class="recipe-image"
                 >
             {% else %}
-                <img
-                    src="https://placehold.jp/300x200.png"
-                    alt="画像なし"
-                    class="recipe-image"
-                >
+                <div class="no-image" role="img" aria-label="画像なし">
+                    NO IMAGE
+                </div>
             {% endif %}
 
             <div class="my-recipe-info">

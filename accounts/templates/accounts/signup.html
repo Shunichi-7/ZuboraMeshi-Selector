@@ -36,6 +36,29 @@
         font-size: 16px;
     }
 
+     /* パスワード設定条件の案内 */
+    .password-requirements {
+        max-width: 420px;
+        margin: 0 0 25px;
+        padding: 15px 20px;
+        border: 1px solid #999;
+        border-radius: 15px;
+        box-sizing: border-box;
+        font-size: 15px;
+    }
+
+    /* 案内の見出し */
+    .password-requirements p {
+        margin: 0 0 10px;
+    }
+
+    /* パスワード条件の一覧 */
+    .password-requirements ul {
+        margin: 0;
+        padding-left: 25px;
+        line-height: 1.8;
+    }
+
     /* エラーメッセージ */
     .signup-error {
         color: red;
@@ -126,7 +149,18 @@
 
         </div>
 
+        <!-- パスワード設定条件 -->
+        <div class="password-requirements">
 
+            <p>パスワード設定条件</p>
+
+            <ul>
+                <li>8文字以上</li>
+                <li>英字大文字・小文字・数字を含む</li>
+            </ul>
+
+        </div>
+        
         <!-- パスワード -->
         <div class="signup-form-group">
 

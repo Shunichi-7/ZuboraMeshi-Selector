@@ -12,9 +12,7 @@
         ========================== */
 
         .content{
-
             padding:20px;
-
         }
 
         /* ==========================
@@ -22,47 +20,29 @@
         ========================== */
 
         .form-group{
-
             display:flex;
-
             align-items:flex-start;
-
             margin-bottom:28px;
-
         }
 
         .label{
-
             width:170px;
-
             font-size:16px;
-
             font-weight:bold;
-
             display:flex;
-
             align-items:center;
-
             gap:6px;
-
             flex-shrink:0;
-
         }
 
         .required{
-
             color:#ff9800;
-
             font-size:13px;
-
             font-weight:normal;
-
         }
 
         .right{
-
             flex:1;
-
         }
 
         input[type="text"],
@@ -75,253 +55,200 @@
         }
 
         select{
-
             padding:8px;
-
             font-size:16px;
-
         }
 
         .image-preview{
-
             width:160px;
-
             height:160px;
-
             background:#eee;
-
             border:1px solid #ccc;
-
             margin-bottom:10px;
-
         }
 
         .image-button{
-
             display:block;
-
             width:120px;
-
             margin:0 auto;
-
             text-align:center;
-
             background:#ff9800;
-
             color:white;
-
             padding:10px;
-
             border-radius:4px;
-
             cursor:pointer;
-
         }
 
         .image-button input{
-
             display:none;
-
         }
 
         .price-label{
-
             align-items:flex-start;
-
         }
 
         .price-label .required{
-
             margin-top:4px;
-
         }
 
         .ingredient-row{
-
             display:flex;
-
             align-items:center;
-
             gap:10px;
-
         }
 
         .ingredient-select{
-
             width:90px;
-
             padding:8px;
-
         }
 
         .ingredient-input-row{
-
             display:flex;
-
             align-items:center;
-
             gap:8px;
-
             margin-top:12px;
-
         }
 
         .ingredient-name{
-
             width:120px;
-
         }
 
         .ingredient-amount{
-
             width:100px;
-
         }
 
-        .delete-button{
+        /* ゴミ箱ボタン */
+        .delete-button {
+            width: 34px;
+            height: 34px;
+            padding: 8px;
+            background-color: transparent;
+            border: none;
+            border-radius: 4px;
+            color: #e53935;
+            cursor: pointer;
+        }
 
-            background:none;
+        /* ゴミ箱本体 */
+        .trash-icon {
+            position: relative;
+            display: block;
+            width: 14px;
+            height: 16px;
+            border: 2px solid currentColor;
+            border-top: none;
+            border-radius: 0 0 2px 2px;
+            box-sizing: border-box;
+            pointer-events: none;
+        }
 
-            border:none;
+        /* ゴミ箱のふた */
+        .trash-icon::before {
+            content: "";
+            position: absolute;
+            top: -5px;
+            left: -3px;
+            width: 16px;
+            border-top: 2px solid currentColor;
+        }
 
-            font-size:20px;
+        /* ゴミ箱の持ち手 */
+        .trash-icon::after {
+            content: "";
+            position: absolute;
+            top: -8px;
+            left: 3px;
+            width: 6px;
+            height: 3px;
+            border: 2px solid currentColor;
+            border-bottom: none;
+            box-sizing: border-box;
+        }
 
-            cursor:pointer;
-
-            color:orange;
-
+        /* 入力欄が1つだけの場合の無効なゴミ箱ボタン */
+        .delete-button:disabled {
+            color: #aaa;
+            background-color: #eee;
+            cursor: not-allowed;
+            opacity: 0.7;
         }
 
         .add-button{
-
             margin-top:10px;
-
             background:#ff9800;
-
             color:white;
-
             border:none;
-
             padding:8px 12px;
-
             cursor:pointer;
-
             font-size:14px;
-
         }
 
         .step-section{
-
             margin-top:20px;
-
             margin-bottom:30px;
-
         }
 
         .step-title{
-
             font-size:20px;
-
             font-weight:bold;
-
             margin-bottom:12px;
-
         }
 
         .step-row{
-
             display:flex;
-
             align-items:center;
-
             gap:10px;
-
         }
 
         .step-input{
-
             width:100%;
-
             min-height:90px;
-
             padding:10px;
-
             font-size:16px;
-
             box-sizing:border-box;
-
             resize:vertical;
-
             font-family:inherit;
-
         }
 
         .memo-section{
-
             margin-top:30px;
-
             margin-bottom:30px;
-
         }
 
         .memo-title{
-
             font-size:20px;
-
             font-weight:bold;
-
             margin-bottom:12px;
-
         }
 
         .memo-input{
-
             width:100%;
-
             height:90px;
-
             padding:10px;
-
             font-size:16px;
-
             box-sizing:border-box;
-
             resize:vertical;
-
             font-family:inherit;
-
         }
 
         .tag-section{
-
             margin-bottom:30px;
-
         }
 
         .tag-title{
-
             font-size:20px;
-
             font-weight:bold;
-
             margin-bottom:10px;
-
         }
 
         .checkbox-group{
-
             display:grid;
-
             grid-template-columns:1fr 1fr;
-
             row-gap:10px;
-
         }
 
         .checkbox-group label{
-
             font-size:16px;
-
         }
 
         .submit-button,
@@ -335,39 +262,24 @@
         }
 
         .submit-button{
-
             background:#4285f4;
-
             color:white;
-
             border:none;
-
             cursor:pointer;
-
         }
 
         .back-button{
-
             background:white;
-
             color:#4285f4;
-
             border:1px solid #999;
-
             cursor:pointer;
-
         }
 
         .button-area{
-
             display:flex;
-
             justify-content:center;
-
             gap:20px;
-
             margin:40px 0;
-
         }
 
         .edit-delete-button {
@@ -629,7 +541,7 @@
                     type="button"
                     class="delete-button"
                 >
-                    🗑
+                    <span class="trash-icon"></span>
                 </button>
 
             </div>
@@ -659,7 +571,7 @@
                 type="button"
                 class="delete-button"
             >
-                🗑
+                <span class="trash-icon"></span>
             </button>
 
         </div>
@@ -706,8 +618,8 @@
                     <button
                         type="button"
                         class="delete-button"
-                    >
-                        🗑
+>
+                        <span class="trash-icon"></span>
                     </button>
 
                 </div>
@@ -728,8 +640,8 @@
                 <button
                     type="button"
                     class="delete-button"
-                >
-                    🗑
+>
+                    <span class="trash-icon"></span>
                 </button>
 
             </div>
@@ -1002,12 +914,13 @@ addIngredientButton.addEventListener("click", function () {
             type="button"
             class="delete-button"
         >
-            🗑
+            <span class="trash-icon"></span>
         </button>
     `;
 
     // 材料一覧の一番下に追加する
     ingredientList.appendChild(newIngredient);
+    updateDeleteButtons();
 
 });
 
@@ -1025,9 +938,14 @@ document.addEventListener("click", function (event) {
     // 材料欄を削除する場合
     if (row.classList.contains("ingredient-input-row")) {
 
-        // 材料が2行以上ある時だけ削除する
         if (ingredientList.children.length > 1) {
+
+            // 選択した材料の入力欄を削除する
             row.remove();
+
+            // 削除後の入力欄の数に合わせて、ゴミ箱ボタンの状態を変更する
+            updateDeleteButtons();
+
         }
 
     }
@@ -1035,9 +953,14 @@ document.addEventListener("click", function (event) {
     // 作り方を削除する場合
     if (row.classList.contains("step-row")) {
 
-        // 作り方が2行以上ある時だけ削除する
         if (stepList.children.length > 1) {
+
+            // 選択した作り方の入力欄を削除する
             row.remove();
+
+            // 削除後の入力欄の数に合わせて、ゴミ箱ボタンの状態を変更する
+            updateDeleteButtons();
+
         }
 
     }
@@ -1049,6 +972,32 @@ const addStepButton = document.getElementById("add-step");
 
 // 作り方一覧のエリアを取得する
 const stepList = document.getElementById("step-list");
+
+// 入力欄の数に応じてゴミ箱ボタンの有効・無効を切り替える
+function updateDeleteButtons() {
+
+    // 材料のゴミ箱ボタンをすべて取得する
+    const ingredientButtons =
+        ingredientList.querySelectorAll(".delete-button");
+
+    // 材料の入力欄が1つなら、ゴミ箱ボタンを無効にする
+    ingredientButtons.forEach(function (button) {
+        button.disabled = ingredientList.children.length === 1;
+    });
+
+    // 作り方のゴミ箱ボタンをすべて取得する
+    const stepButtons =
+        stepList.querySelectorAll(".delete-button");
+
+    // 作り方の入力欄が1つなら、ゴミ箱ボタンを無効にする
+    stepButtons.forEach(function (button) {
+        button.disabled = stepList.children.length === 1;
+    });
+
+}
+
+// 画面を開いたときに、ゴミ箱ボタンの状態を確認する
+updateDeleteButtons();
 
 // 「＋作り方を追加」ボタンが押された時の処理
 addStepButton.addEventListener("click", function () {
@@ -1071,12 +1020,13 @@ addStepButton.addEventListener("click", function () {
             type="button"
             class="delete-button"
         >
-            🗑
+            <span class="trash-icon"></span>
         </button>
     `;
 
     // 作り方一覧の一番下に追加する
     stepList.appendChild(newStep);
+    updateDeleteButtons();
 
 });
 
