@@ -976,6 +976,18 @@ const addStepButton = document.getElementById("add-step");
 // 作り方一覧のエリアを取得する
 const stepList = document.getElementById("step-list");
 
+// 作り方の入力欄に「1、2、3…」と順番に番号を表示する
+function updateStepNumbers() {
+
+    const stepInputs = stepList.querySelectorAll(".step-input");
+
+    stepInputs.forEach(function (input, index) {
+        input.placeholder =
+            (index + 1) + ". 作り方を入力してください";
+    });
+
+}
+
 // 入力欄の数に応じてゴミ箱ボタンの有効・無効を切り替える
 function updateDeleteButtons() {
 
@@ -992,10 +1004,12 @@ function updateDeleteButtons() {
     const stepButtons =
         stepList.querySelectorAll(".delete-button");
 
-    // 作り方の入力欄が1つなら、ゴミ箱ボタンを無効にする
-    stepButtons.forEach(function (button) {
+        stepButtons.forEach(function (button) {
         button.disabled = stepList.children.length === 1;
     });
+
+    // 作り方の番号を現在の並び順に合わせて振り直す
+    updateStepNumbers();
 
 }
 
