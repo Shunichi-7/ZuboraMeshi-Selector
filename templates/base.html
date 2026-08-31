@@ -70,6 +70,12 @@
         /* メッセージ全体の位置と余白を整える */
         .messages {
             margin: 12px 16px 0;
+            transition: opacity 1s ease;
+        }
+
+        /* サクセスメッセージを徐々に透明にする */
+        .messages.fade-out {
+            opacity: 0;
         }
 
         /* 処理が成功したことを示すメッセージの見た目を設定 */
@@ -584,6 +590,26 @@
             });
 
         });
+    </script>
+    
+    <!-- サクセスメッセージを数秒後に徐々に消す -->
+    <script>
+        // サクセスメッセージの表示領域を取得する
+        const messages = document.querySelector(".messages");
+
+        // サクセスメッセージが表示されている場合だけ実行する
+        if (messages) {
+
+            // 3秒後に徐々に透明にする
+            setTimeout(function () {
+                messages.classList.add("fade-out");
+            }, 3000);
+
+            // 透明になったあと、表示領域自体を削除する
+            setTimeout(function () {
+                messages.remove();
+            }, 4000);
+        }
     </script>
 
 </body>

@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect #HTMLファイルを読み込み�
 
 from django.contrib.auth.decorators import login_required
 
+from django.views.decorators.http import require_POST # ログアウト処理を、ボタンから送信された場合だけ実行できるようにする機能を読み込む
+
 from .forms import SignUpForm, AccountEditForm  #アカウント作成画面で入力内容を確認し、新しいユーザーを登録できるようにするため、同じaccountsフォルダのforms.pyから、作成したアカウント登録フォームを読み込む
 
 from django.contrib.auth import authenticate, login, logout #ユーザーがログイン・ログアウトを切り替えられるようにするため、ログイン情報の確認、ログイン処理、ログアウト処理を使えるようにする
@@ -99,6 +101,8 @@ def signup_view(request): #ユーザーが入力した情報をもとに、実�
         {"form": form}
     ) # 登録フォームをsignup.htmlへ渡し、アカウント登録画面に表示する
     
+# URLを開いただけでログアウトされないように、ボタンからの送信だけを受け付ける
+@require_POST
 def logout_view(request):
 
     # 現在のユーザーのログイン状態を解除する

@@ -8,8 +8,8 @@
 
 <style>
 
-.account-edit-container {
-    padding: 10px;
+.account-edit-container p {
+    padding: 5px 10px;
 }
 
 .account-edit-container p {
@@ -26,12 +26,6 @@
     border: none;
     font-size: 16px;
     cursor: pointer;
-}
-
-.account-edit-container form {
-    width: 320px;
-    max-width: calc(100% - 70px);
-    margin: 0 auto;
 }
 
 .account-edit-container form p {
@@ -68,9 +62,25 @@
         {{ form.username }}
 
         <!-- ユーザー名の入力に問題がある場合、エラーを表示する -->
-        {% if form.username.errors %}
+        {% if form.email.errors %}
             <div style="color:red;">
-                {{ form.username.errors }}
+                {% for error in form.username.errors %}
+
+                    {% if error == "このユーザー名はすでに登録されています。" %}
+                        <ul class="errorlist">
+                            <li>
+                                このユーザー名はすでに<br>
+                                登録されています。
+                            </li>
+                        </ul>
+
+                    {% else %}
+                        <ul class="errorlist">
+                            <li>{{ error }}</li>
+                        </ul>
+                    {% endif %}
+
+                {% endfor %}
             </div>
         {% endif %}
     </p>
@@ -82,7 +92,23 @@
         <!-- メールアドレスの入力に問題がある場合、エラーを表示する -->
         {% if form.email.errors %}
             <div style="color:red;">
-                {{ form.email.errors }}
+                {% for error in form.email.errors %}
+
+                    {% if error == "このメールアドレスはすでに登録されています。" %}
+                        <ul class="errorlist">
+                            <li>
+                                このメールアドレスはすでに<br>
+                                登録されています。
+                            </li>
+                        </ul>
+
+                    {% else %}
+                        <ul class="errorlist">
+                            <li>{{ error }}</li>
+                        </ul>
+                    {% endif %}
+
+                {% endfor %}
             </div>
         {% endif %}
     </p>

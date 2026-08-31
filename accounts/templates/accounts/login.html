@@ -87,7 +87,7 @@
     </h2>
 
     <!-- ここからログイン情報を入力・送信する範囲 -->
-    <form method="post">
+    <form method="post" novalidate>
 
         <!--
         このWebサイトの正しい画面から送信されたことを確認し、
@@ -142,9 +142,10 @@
 
         {% if error_message %}
             <p class="login-error">
-                {{ error_message }}
+                正しいメールアドレスとパスワードを<br>
+                入力してください。
             </p>
-        {% endif %} 
+        {% endif %}
     </form>
 
 

@@ -114,13 +114,21 @@
                 キャンセル
             </button>
 
-            <a
-                href="{% url 'logout' %}"
-                class="modal-button modal-danger-button modal-link"
-                id="logout-confirm"
+            <form
+                method="post"
+                action="{% url 'logout' %}"
+                class="modal-form"
             >
-                ログアウト
-            </a>
+                {% csrf_token %}
+
+                <button
+                    type="submit"
+                    class="modal-button modal-danger-button"
+                    id="logout-confirm"
+                >
+                    ログアウト
+                </button>
+            </form>
 
         </div>
 

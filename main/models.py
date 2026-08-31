@@ -44,6 +44,16 @@ class Favorite(models.Model):
         Recipe,
         on_delete=models.CASCADE
     ) # お気に入りされたレシピを保存する
+    
+    class Meta:
+
+        # 同じユーザーが同じレシピを重複してお気に入り登録できないようにする
+        constraints = [
+            models.UniqueConstraint(
+                fields=["user", "recipe"],
+                name="unique_user_recipe_favorite",
+            )
+        ]
 
     def __str__(self):
         return f"{self.user.username} - {self.recipe.title}" # 管理画面で「ユーザー名 - レシピ名」と表示する

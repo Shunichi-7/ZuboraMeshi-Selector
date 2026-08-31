@@ -131,7 +131,26 @@ class AccountEditForm(forms.ModelForm):
             "username",
             "email",
         ]
-        
+
+    # 入力されたユーザー名が他のユーザーに使われていないか確認する
+    def clean_username(self):
+
+        # 入力されたユーザー名を取得する
+        username = self.cleaned_data.get("username")
+
+        # 自分以外のユーザーで、同じユーザー名が登録されていないか確認する
+        if User.objects.filter(
+            username=username
+        ).exclude(
+            pk=self.instance.pk
+        ).exists():
+
+            raise forms.ValidationError(
+                "このユーザー名はすでに登録されています。"
+            )
+
+        return username
+
     # 入力されたメールアドレスが他のユーザーに使われていないか確認する
     def clean_email(self):
 
@@ -139,13 +158,17 @@ class AccountEditForm(forms.ModelForm):
         email = self.cleaned_data.get("email")
 
         # 自分以外のユーザーで、同じメールアドレスが登録されていないか確認する
-        if User.objects.filter(email=email).exclude(pk=self.instance.pk).exists():
+        if User.objects.filter(
+            email=email
+        ).exclude(
+            pk=self.instance.pk
+        ).exists():
+
             raise forms.ValidationError(
                 "このメールアドレスはすでに登録されています。"
             )
 
         return email
-    
     
 # パスワード変更フォーム
 class CustomPasswordChangeForm(PasswordChangeForm):

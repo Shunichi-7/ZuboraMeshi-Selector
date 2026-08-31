@@ -26,8 +26,9 @@ SECRET_KEY = os.environ.get(
     "django-insecure-local-development-only"
 )
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# 公開環境では内部情報がエラー画面に表示されないように、デバッグ機能を無効にする
+# 自分のパソコンで詳しいエラーを確認したいときだけ、デバッグ機能を有効にする
+DEBUG = os.environ.get("DJANGO_DEBUG", "False") == "True"
 
 ALLOWED_HOSTS = [
     "127.0.0.1",
@@ -115,7 +116,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'ja'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = "Asia/Tokyo"
 
 USE_I18N = True
 

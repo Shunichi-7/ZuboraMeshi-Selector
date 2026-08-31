@@ -6,6 +6,7 @@ from .models import Recipe, Favorite # レシピとお気に入り情報を使�
 
 from django.contrib import messages # レシピの投稿や変更などの処理が完了したことをユーザーに知らせるメッセージ機能を読み込む
 
+from django.views.decorators.http import require_POST # 登録・解除などの処理を、ボタンから送信された場合だけ実行できるようにする機能を読み込む
 def portfolio(request):
     return render(request, "main/portfolio.html")
 
@@ -16,27 +17,47 @@ def recipe_list(request):
 
     recipes = Recipe.objects.all()
 
+    # 調理時間が数字の場合だけ検索条件として使用する
     cooking_time = request.GET.get("cooking_time")
 
-    if cooking_time:
+    if cooking_time and cooking_time.isdigit():
 
         recipes = recipes.filter(
             cooking_time__lte=cooking_time
         )
+
+    else:
+
+        # 数字以外が送られた場合は、調理時間の条件を使用しない
+        cooking_time = None
         
+    # URLを書き換えて数字以外を入力されてもエラーにならないようにする
     ingredient_count = request.GET.get("ingredient_count")
 
-    if ingredient_count:
+    if ingredient_count and ingredient_count.isdigit():
+
         recipes = recipes.filter(
             ingredient_count__lte=ingredient_count
         )
+
+    else:
+
+        # 数字以外の場合は、材料数の検索条件を使用しない
+        ingredient_count = None
         
+    # URLを書き換えて数字以外を入力されてもエラーにならないようにする
     price = request.GET.get("price")
 
-    if price:
+    if price and price.isdigit():
+
         recipes = recipes.filter(
             price__lte=price
         )
+
+    else:
+
+        # 数字以外の場合は、金額の検索条件を使用しない
+        price = None
         
     mood_tags = request.GET.getlist("mood")
 
@@ -224,7 +245,7 @@ def recipe_create(request):
                 steps += f"{i}. {step}\n"
 
         # レシピをデータベースに保存する
-        Recipe.objects.create(
+        recipe = Recipe.objects.create(
 
             title=title,
 
@@ -258,7 +279,7 @@ def recipe_create(request):
             "レシピを投稿しました。"
         ) 
         
-        return redirect("recipe_list") # 保存が完了したら、レシピ一覧画面へ移動する
+        return redirect("recipe_detail", recipe_id=recipe.id) # 保存したレシピの詳細画面へ移動する
 
     # レシピ投稿画面を表示する
     return render(
@@ -266,7 +287,9 @@ def recipe_create(request):
         "main/recipe_create.html"
     )
     
+# URLを開いただけでお気に入りが変更されないように、ボタンからの送信だけを受け付ける
 @login_required
+@require_POST
 def favorite_toggle(request, recipe_id): # お気に入りの登録・解除を切り替える
 
     # URLから受け取ったIDと一致するレシピを取得する
@@ -520,13 +543,9 @@ def my_recipe_edit(request, recipe_id):
 @login_required
 def favorite_list(request):
 
-    print("ログイン中のユーザー:", request.user)
-
     favorites = Favorite.objects.filter(
         user=request.user
     )
-
-    print("お気に入り件数:", favorites.count())
 
     return render(
         request,
