@@ -9,11 +9,6 @@
 
 <style>
 
-    /* ログイン画面全体 */
-    .login-content {
-        padding: 20px 35px 40px;
-    }
-
     /* メールアドレス・パスワードのまとまり */
     .login-form-group {
         margin-bottom: 25px;
@@ -73,6 +68,81 @@
         margin-top: 10px;
     }
 
+    /* ログイン画面をスマートフォンの表示領域内に収める */
+        .container:has(.login-content) {
+            /* ログイン画面では下部ナビを表示しないため、下部の余白をなくす */
+            padding-bottom: 0;
+
+            /* スマートフォンで実際に表示できる画面の高さに合わせる */
+            min-height: 100dvh;
+            height: 100dvh;
+
+            /* 画面外へのはみ出しによるスクロールを防ぐ */
+            overflow: hidden;
+        }
+
+    /* ログイン画面全体の上下左右の余白を整える */
+    .login-content {
+        padding: 20px 35px;
+        /* 余白を含めて画面幅を計算し、横にはみ出さないようにする */
+        box-sizing: border-box;
+    }
+
+    /* スマートフォンでは縦方向の余白を縮め、1画面内で操作できるようにする */
+    @media (max-width: 480px) {
+        .login-content {
+            padding: 15px 35px;
+        }
+
+        /* 「ログイン」の見出し下の余白を縮める */
+        .login-content .page-title {
+            margin-bottom: 20px;
+        }
+
+        /* 各入力項目の下の余白を縮める */
+        .login-form-group {
+            margin-bottom: 15px;
+        }
+
+        /* ログインボタン上下の余白を縮める */
+        .login-button-area {
+            margin: 20px 0 15px;
+        }
+
+        /* アカウント登録・パスワード再設定リンクの余白を縮める */
+        .login-link {
+            margin: 6px 0;
+        }
+    }
+
+    /* スマートフォンでは各項目の間隔を整える */
+    @media (max-width: 480px) {
+        .login-content {
+            padding: 35px 35px;
+        }
+
+        /* 見出しと入力欄の間隔 */
+        .login-content .page-title {
+            margin-bottom: 40px;
+        }
+
+        /* メールアドレス欄とパスワード欄の間隔 */
+        .login-form-group {
+            margin-bottom: 30px;
+        }
+
+        /* 入力欄とログインボタンの間隔 */
+        .login-button-area {
+            margin: 40px 0 35px;
+        }
+
+        /* 2つの案内リンクの間隔 */
+        .login-link {
+            margin: 15px 0;
+        }
+    }
+
+
 </style>
 
 {% endblock %}
@@ -122,7 +192,6 @@
                 type="password"
                 id="password"
                 name="password"
-                type="password"
             >
 
         </div>
