@@ -77,8 +77,6 @@
             min-height: 100dvh;
             height: 100dvh;
 
-            /* 画面外へのはみ出しによるスクロールを防ぐ */
-            overflow: hidden;
         }
 
     /* ログイン画面全体の上下左右の余白を整える */
@@ -229,6 +227,13 @@
         パスワードを忘れた方は
         <a href="{% url 'password_reset' %}">
             こちら
+        </a>
+    </p>
+
+    <!-- ログインせずに検索画面へ戻るためのリンク -->
+    <p class="login-link">
+        <a href="{% url 'home' %}">
+            ログインせずに利用する
         </a>
     </p>
 

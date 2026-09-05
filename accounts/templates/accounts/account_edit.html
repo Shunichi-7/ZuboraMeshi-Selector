@@ -7,11 +7,6 @@
 {% block extra_css %}
 
 <style>
-
-.account-edit-container p {
-    padding: 5px 10px;
-}
-
 .account-edit-container p {
     padding: 5px 10px;
 }
@@ -41,6 +36,17 @@
     font-size: 16px;
 }
 
+.account-edit-container {
+    padding-top: 20px;
+}
+
+/* アカウント情報編集画面をスマートフォンの表示領域内に収める */
+.container:has(.account-edit-container) {
+    /* スマートフォンで実際に表示できる画面の高さに合わせる */
+    min-height: 100dvh;
+    height: 100dvh;
+}
+
 </style>
 
 {% endblock %}
@@ -62,7 +68,7 @@
         {{ form.username }}
 
         <!-- ユーザー名の入力に問題がある場合、エラーを表示する -->
-        {% if form.email.errors %}
+        {% if form.username.errors %}
             <div style="color:red;">
                 {% for error in form.username.errors %}
 

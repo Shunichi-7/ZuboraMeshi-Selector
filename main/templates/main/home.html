@@ -63,6 +63,11 @@
         cursor: pointer;
     }
 
+    /* 「レシピ検索」と説明文の間を1行分程度あける */
+    .home-content .page-title {
+        margin-bottom: 15px;
+    }
+
 </style>
 
 {% endblock %}
@@ -85,7 +90,8 @@
         </h2>
 
         <p class="search-description">
-        希望条件を選択してレシピを検索しましょう
+        希望条件を選択してレシピを検索しましょう<br>
+        ※複数選択可
         </p>
 
         <form method="get" action="{% url 'recipe_list' %}">
